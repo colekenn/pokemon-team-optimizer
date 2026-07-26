@@ -37,3 +37,7 @@ Covers the type chart against known matchups, scoring properties (mono-type team
 - Roles are simple stat thresholds, not based on real usage
 - The "threat list" is just the top 25 BST in the pool; real usage stats (e.g. Smogon) would be better
 - Would be nice: side-by-side team comparison, saved teams, a genetic algorithm to compare against beam
+
+## license
+
+MIT
