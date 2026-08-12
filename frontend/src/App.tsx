@@ -65,9 +65,17 @@ export default function App() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
-      <header className="mb-6 flex flex-wrap items-center gap-4">
-        <h1 className="text-xl font-bold tracking-tight">
-          ⚡ Pokémon <span className="text-sky-400">Team Optimizer</span>
+      <header className="mb-6 flex flex-wrap items-center justify-center gap-4 text-center">
+        <h1 className="flex items-center gap-2.5 text-2xl font-black tracking-tight text-pokeblue-dark">
+          <span
+            aria-hidden
+            className="inline-block h-8 w-8 rounded-full border-[3px] border-slate-800 shadow-md"
+            style={{
+              background:
+                'linear-gradient(180deg, #ee1515 0 44%, #1f2937 44% 56%, #fff 56% 100%)',
+            }}
+          />
+          Pokémon <span className="text-pokered">Team Optimizer</span>
         </h1>
         <select
           value={formatId ?? ''}
@@ -76,7 +84,7 @@ export default function App() {
             setAnalysis(null)
             setOptResult(null)
           }}
-          className="rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-sm"
+          className="rounded-full border-2 border-pokeblue/40 bg-white px-4 py-1.5 text-sm font-bold text-pokeblue-dark shadow-sm outline-none focus:border-pokeblue"
         >
           {formats.data?.map((f) => (
             <option key={f.id} value={f.id}>
@@ -84,14 +92,17 @@ export default function App() {
             </option>
           ))}
         </select>
+      </header>
+
+      <div className="mb-6 flex justify-center">
         <button
           onClick={() => optimize.mutate([])}
           disabled={optimize.isPending || formatId == null}
-          className="ml-auto rounded-lg bg-sky-600 px-5 py-2 text-sm font-semibold shadow transition hover:bg-sky-500 disabled:opacity-50"
+          className="pokeball-btn px-8 py-2.5 text-sm"
         >
           {optimize.isPending ? 'Optimizing…' : 'Optimize team'}
         </button>
-      </header>
+      </div>
 
       <TeamSlots
         slots={slots}
@@ -105,7 +116,7 @@ export default function App() {
       />
 
       {optResult && (
-        <p className="mt-2 text-xs text-slate-500">
+        <p className="mt-2 text-xs font-semibold text-pokeblue/70">
           {optResult.cache_hit
             ? 'cached result'
             : `evaluated ${optResult.states_evaluated.toLocaleString()} team configurations in ${(optResult.elapsed_ms / 1000).toFixed(2)}s`}

@@ -2,27 +2,29 @@ import type { AnalyzeResponse } from '../api/client'
 import { TypeBadge } from './TypeBadge'
 
 function cellStyle(m: number): { bg: string; label: string } {
-  if (m === 0) return { bg: 'bg-emerald-600/80', label: '0' }
-  if (m === 0.25) return { bg: 'bg-emerald-500/50', label: '¼' }
-  if (m === 0.5) return { bg: 'bg-emerald-500/30', label: '½' }
-  if (m === 2) return { bg: 'bg-rose-500/50', label: '2' }
-  if (m >= 4) return { bg: 'bg-rose-600/80', label: '4' }
-  return { bg: 'bg-slate-800/40', label: '' }
+  if (m === 0) return { bg: 'bg-emerald-500 text-white', label: '0' }
+  if (m === 0.25) return { bg: 'bg-emerald-300 text-emerald-900', label: '¼' }
+  if (m === 0.5) return { bg: 'bg-emerald-200 text-emerald-800', label: '½' }
+  if (m === 2) return { bg: 'bg-rose-300 text-rose-900', label: '2' }
+  if (m >= 4) return { bg: 'bg-rose-500 text-white', label: '4' }
+  return { bg: 'bg-slate-100', label: '' }
 }
 
 export function WeaknessMatrix({ analysis, memberNames }: { analysis: AnalyzeResponse; memberNames: string[] }) {
   const types = Object.keys(analysis.weakness_matrix)
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 p-3">
-      <h3 className="mb-2 text-sm font-semibold text-slate-300">Defensive matrix</h3>
+    <div className="card overflow-x-auto p-3">
+      <h3 className="mb-2 text-sm font-extrabold uppercase tracking-wide text-pokeblue-dark">
+        Defensive matrix
+      </h3>
       <table className="w-full border-separate border-spacing-0.5 text-center text-xs">
         <thead>
           <tr>
             <th />
             {memberNames.map((n) => (
-              <th key={n} className="max-w-16 truncate px-1 pb-1 font-medium capitalize text-slate-400">{n}</th>
+              <th key={n} className="max-w-16 truncate px-1 pb-1 font-bold capitalize text-slate-600">{n}</th>
             ))}
-            <th className="px-1 pb-1 font-medium text-slate-400">weak</th>
+            <th className="px-1 pb-1 font-bold text-slate-600">weak</th>
           </tr>
         </thead>
         <tbody>
@@ -34,9 +36,9 @@ export function WeaknessMatrix({ analysis, memberNames }: { analysis: AnalyzeRes
                 <td className="pr-1 text-left"><TypeBadge type={t} small /></td>
                 {row.map((m, i) => {
                   const { bg, label } = cellStyle(m)
-                  return <td key={i} className={`h-6 w-9 rounded ${bg}`}>{label}</td>
+                  return <td key={i} className={`h-6 w-9 rounded-md font-bold ${bg}`}>{label}</td>
                 })}
-                <td className={`w-10 rounded font-semibold ${weakCount >= 3 ? 'bg-rose-700/70' : weakCount === 2 ? 'bg-rose-500/40' : 'text-slate-500'}`}>
+                <td className={`w-10 rounded-md font-extrabold ${weakCount >= 3 ? 'bg-pokered text-white' : weakCount === 2 ? 'bg-rose-200 text-rose-800' : 'text-slate-400'}`}>
                   {weakCount || ''}
                 </td>
               </tr>

@@ -1,6 +1,28 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  --color-pokered: #ee1515;
+  --color-pokered-dark: #c40e0e;
+  --color-pokeyellow: #ffcb05;
+  --color-pokeblue: #2a75bb;
+  --color-pokeblue-dark: #1b5391;
+}
+
 body {
-  @apply bg-slate-950 text-slate-100 antialiased;
-  font-family: ui-sans-serif, system-ui, sans-serif;
+  @apply text-slate-800 antialiased;
+  font-family: var(--font-sans);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(255, 203, 5, 0.25), transparent),
+    linear-gradient(180deg, #bfe3ff 0%, #e8f5ff 45%, #fff9e6 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.card {
+  @apply rounded-2xl border-2 border-white/80 bg-white/90 shadow-lg shadow-sky-200/60 backdrop-blur;
+}
+
+.pokeball-btn {
+  @apply relative overflow-hidden rounded-full bg-pokered font-extrabold text-white shadow-lg shadow-red-300/60 transition hover:bg-pokered-dark hover:shadow-red-400/60 active:scale-95 disabled:opacity-50;
 }

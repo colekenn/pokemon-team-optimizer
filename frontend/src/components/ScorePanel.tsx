@@ -17,12 +17,14 @@ export function ScorePanel({
   beforeScore?: number | null
 }) {
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
+    <div className="card p-4">
       <div className="flex items-baseline gap-3">
-        <h3 className="text-sm font-semibold text-slate-300">Team score</h3>
-        <span className="text-2xl font-bold text-sky-400">{score.toFixed(2)}</span>
+        <h3 className="text-sm font-extrabold uppercase tracking-wide text-pokeblue-dark">
+          Team score
+        </h3>
+        <span className="text-3xl font-black text-pokered">{score.toFixed(2)}</span>
         {beforeScore != null && (
-          <span className="text-xs text-emerald-400">
+          <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-bold text-emerald-700">
             ▲ +{(score - beforeScore).toFixed(2)} vs locked-only
           </span>
         )}
@@ -33,14 +35,20 @@ export function ScorePanel({
           const penalty = k === 'shared_weakness'
           return (
             <div key={k} className="flex items-center gap-2 text-xs">
-              <span className="w-44 shrink-0 text-slate-400">{label}</span>
-              <div className="h-2 flex-1 overflow-hidden rounded bg-slate-800">
+              <span className="w-44 shrink-0 font-semibold text-slate-600">{label}</span>
+              <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-slate-200">
                 <div
-                  className={`h-full rounded ${penalty ? 'bg-rose-500' : 'bg-sky-500'}`}
+                  className={`h-full rounded-full ${
+                    penalty
+                      ? 'bg-gradient-to-r from-rose-400 to-pokered'
+                      : 'bg-gradient-to-r from-pokeyellow to-amber-400'
+                  }`}
                   style={{ width: `${Math.min(100, v * 100)}%` }}
                 />
               </div>
-              <span className="w-10 text-right tabular-nums text-slate-300">{v.toFixed(2)}</span>
+              <span className="w-10 text-right font-bold tabular-nums text-slate-700">
+                {v.toFixed(2)}
+              </span>
             </div>
           )
         })}

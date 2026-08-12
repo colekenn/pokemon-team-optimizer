@@ -16,10 +16,10 @@ export function TeamSlots({ slots, optimizing, onPick, onRemove, onToggleLock }:
         slot.species ? (
           <div
             key={i}
-            className={`relative rounded-xl border p-3 text-center transition ${
+            className={`relative rounded-2xl border-2 p-3 text-center shadow-lg backdrop-blur transition hover:-translate-y-1 ${
               slot.locked
-                ? 'border-amber-400/70 bg-amber-400/5'
-                : 'border-slate-700 bg-slate-900'
+                ? 'border-pokeyellow bg-yellow-50/95 shadow-yellow-200/70'
+                : 'border-white/80 bg-white/90 shadow-sky-200/60'
             }`}
           >
             <button
@@ -32,24 +32,28 @@ export function TeamSlots({ slots, optimizing, onPick, onRemove, onToggleLock }:
             <button
               onClick={() => onRemove(i)}
               title="Remove"
-              className="absolute right-2 top-1.5 text-slate-500 hover:text-red-400"
+              className="absolute right-2 top-1.5 font-bold text-slate-400 hover:text-pokered"
             >
               ✕
             </button>
-            {slot.species.sprite_url && (
-              <img
-                src={slot.species.sprite_url}
-                alt={slot.species.name}
-                className="mx-auto h-20 w-20 object-contain drop-shadow"
-              />
-            )}
-            <div className="mt-1 text-sm font-semibold capitalize">{slot.species.name}</div>
+            <div className="mx-auto mt-1 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-b from-sky-100 to-white shadow-inner">
+              {slot.species.sprite_url && (
+                <img
+                  src={slot.species.sprite_url}
+                  alt={slot.species.name}
+                  className="h-20 w-20 object-contain drop-shadow-md"
+                />
+              )}
+            </div>
+            <div className="mt-1.5 text-sm font-extrabold capitalize text-slate-800">
+              {slot.species.name}
+            </div>
             <div className="mt-1 flex justify-center gap-1">
               {slot.species.types.map((t) => (
                 <TypeBadge key={t} type={t} small />
               ))}
             </div>
-            <div className="mt-1 text-[10px] uppercase tracking-wide text-slate-400">
+            <div className="mt-1 text-[10px] font-bold uppercase tracking-wide text-pokeblue/70">
               {slot.species.role}
             </div>
           </div>
@@ -57,12 +61,21 @@ export function TeamSlots({ slots, optimizing, onPick, onRemove, onToggleLock }:
           <button
             key={i}
             onClick={() => onPick(i)}
-            className={`flex min-h-[150px] flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-700 text-slate-500 transition hover:border-slate-500 hover:text-slate-300 ${
+            className={`flex min-h-[150px] flex-col items-center justify-center rounded-2xl border-[3px] border-dashed border-pokeblue/30 bg-white/40 text-pokeblue/60 transition hover:border-pokered/60 hover:bg-white/70 hover:text-pokered ${
               optimizing ? 'animate-pulse' : ''
             }`}
           >
-            <span className="text-3xl">＋</span>
-            <span className="mt-1 text-xs">{optimizing ? 'optimizing…' : 'optimizer fills'}</span>
+            <span
+              aria-hidden
+              className="inline-block h-9 w-9 rounded-full border-2 border-current opacity-70"
+              style={{
+                background:
+                  'linear-gradient(180deg, transparent 0 42%, currentColor 42% 58%, transparent 58% 100%)',
+              }}
+            />
+            <span className="mt-2 text-xs font-bold">
+              {optimizing ? 'optimizing…' : 'optimizer fills'}
+            </span>
           </button>
         ),
       )}
