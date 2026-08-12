@@ -26,3 +26,86 @@ body {
 .pokeball-btn {
   @apply relative overflow-hidden rounded-full bg-pokered font-extrabold text-white shadow-lg shadow-red-300/60 transition hover:bg-pokered-dark hover:shadow-red-400/60 active:scale-95 disabled:opacity-50;
 }
+
+@keyframes pokeball-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pokeball-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes pokeball-squash {
+  0%,
+  100% {
+    transform: scaleX(1) scaleY(1);
+  }
+  50% {
+    transform: scaleX(1.15) scaleY(0.85);
+  }
+}
+
+@keyframes boot-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+.pokeball-loader {
+  @apply relative h-20 w-20 rounded-full border-[4px] border-slate-800 shadow-xl shadow-red-300/50;
+  background: linear-gradient(180deg, #ee1515 0 44%, #1f2937 44% 56%, #fff 56% 100%);
+  animation: pokeball-spin 1.5s linear infinite;
+}
+
+.pokeball-loader::after {
+  content: '';
+  @apply absolute left-1/2 top-1/2 h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-[4px] border-slate-800 bg-white;
+}
+
+.pokeball-shadow {
+  @apply h-2.5 w-16 rounded-[50%] bg-slate-900/20 blur-[2px];
+  animation: pokeball-squash 1.5s ease-in-out infinite;
+}
+
+.boot-track {
+  @apply relative h-2 w-full overflow-hidden rounded-full bg-white/70;
+}
+
+.boot-track::after {
+  content: '';
+  @apply absolute inset-y-0 w-1/3 rounded-full;
+  background: linear-gradient(90deg, transparent, #ffcb05, #ee1515, transparent);
+  animation: boot-sweep 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pokeball-loader,
+  .pokeball-shadow,
+  .boot-track::after {
+    animation: none;
+  }
+}
+
+.deco-ball {
+  @apply pointer-events-none fixed z-0 rounded-full;
+  background:
+    radial-gradient(circle at center, #fff 0 13%, #1f2937 13% 19%, transparent 19% 100%),
+    linear-gradient(
+      180deg,
+      #ee1515 0 46%,
+      #1f2937 46% 54%,
+      #fff 54% 100%
+    );
+  opacity: 0.08;
+}
