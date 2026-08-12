@@ -13,7 +13,7 @@ def get_client() -> Optional[redis.Redis]:
     global _client
     if _client is None:
         try:
-            _client = redis.Redis.from_url(settings.redis_url, socket_connect_timeout=1)
+            _client = redis.Redis.from_url(settings.redis_url, socket_connect_timeout=3)
             _client.ping()
         except redis.RedisError:
             _client = None
