@@ -75,7 +75,7 @@ export default function App() {
 
   const takenIds = new Set(memberIds)
 
-  if (!bootFinished) {
+  if (!formats.data || !bootFinished) {
     return (
       <BootScreen
         error={formats.isError && !formats.isFetching}
