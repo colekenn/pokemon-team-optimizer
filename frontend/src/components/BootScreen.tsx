@@ -59,7 +59,7 @@ export function BootScreen({ error, onRetry }: Props) {
           <div className="boot-track mt-5 w-56" aria-hidden />
           {elapsed >= 8 && (
             <p className="mt-4 max-w-xs text-xs font-semibold text-slate-500">
-              The free-tier server is waking from a nap — the first load can take up to a minute.
+              Almost done — thanks for your patience!
               After that it&apos;s fast, promise.
             </p>
           )}

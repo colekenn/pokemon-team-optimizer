@@ -97,7 +97,7 @@ export default function App() {
             Pokémon <span className="text-pokered">Team Optimizer</span>
           </h1>
           <p className="text-sm font-semibold text-pokeblue/70">
-            assemble the strongest six — scored, searched &amp; explained
+            assemble the strongest six
           </p>
 
           <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
