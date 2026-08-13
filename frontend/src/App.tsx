@@ -16,6 +16,7 @@ export default function App() {
   const [pickerSlot, setPickerSlot] = useState<number | null>(null)
   const [analysis, setAnalysis] = useState<AnalyzeResponse | null>(null)
   const [optResult, setOptResult] = useState<OptimizeResponse | null>(null)
+  const [bootFinished, setBootFinished] = useState(false)
 
   const formats = useQuery({
     queryKey: ['formats'],
@@ -26,6 +27,11 @@ export default function App() {
   useEffect(() => {
     if (formats.data?.length && formatId == null) setFormat(formats.data[0].id)
   }, [formats.data, formatId, setFormat])
+  useEffect(() => {
+    if (!formats.data) return
+    const timer = setTimeout(() => setBootFinished(true), 700)
+    return () => clearTimeout(timer)
+  }, [formats.data])
 
   const pool = useQuery({
     queryKey: ['pokemon', formatId],
@@ -69,10 +75,11 @@ export default function App() {
 
   const takenIds = new Set(memberIds)
 
-  if (!formats.data) {
+  if (!bootFinished) {
     return (
       <BootScreen
         error={formats.isError && !formats.isFetching}
+        ready={Boolean(formats.data)}
         onRetry={() => formats.refetch()}
       />
     )

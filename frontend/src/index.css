@@ -53,12 +53,12 @@ body {
   }
 }
 
-@keyframes boot-sweep {
+@keyframes boot-shimmer {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-140%);
   }
   100% {
-    transform: translateX(320%);
+    transform: translateX(360%);
   }
 }
 
@@ -79,21 +79,32 @@ body {
 }
 
 .boot-track {
-  @apply relative h-2 w-full overflow-hidden rounded-full bg-white/70;
+  @apply relative h-3 w-full overflow-hidden rounded-full border border-white/80 bg-white/70 shadow-inner;
 }
 
-.boot-track::after {
+.boot-progress {
+  @apply relative h-full overflow-hidden rounded-full;
+  background: linear-gradient(90deg, #ffcb05, #ee1515);
+  box-shadow: 0 0 10px rgba(238, 21, 21, 0.3);
+  transition: width 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.boot-progress::after {
   content: '';
   @apply absolute inset-y-0 w-1/3 rounded-full;
-  background: linear-gradient(90deg, transparent, #ffcb05, #ee1515, transparent);
-  animation: boot-sweep 1.6s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent);
+  animation: boot-shimmer 1.8s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .pokeball-loader,
   .pokeball-shadow,
-  .boot-track::after {
+  .boot-progress::after {
     animation: none;
+  }
+
+  .boot-progress {
+    transition: none;
   }
 }
 

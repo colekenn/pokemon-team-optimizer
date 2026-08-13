@@ -13,12 +13,14 @@ const MESSAGES = [
 
 interface Props {
   error: boolean
+  ready: boolean
   onRetry: () => void
 }
 
-export function BootScreen({ error, onRetry }: Props) {
+export function BootScreen({ error, ready, onRetry }: Props) {
   const [tick, setTick] = useState(0)
   const [elapsed, setElapsed] = useState(0)
+  const [progress, setProgress] = useState(4)
 
   useEffect(() => {
     const m = setInterval(() => setTick((t) => t + 1), 3000)
@@ -28,6 +30,25 @@ export function BootScreen({ error, onRetry }: Props) {
       clearInterval(e)
     }
   }, [])
+
+  useEffect(() => {
+    if (ready) {
+      setProgress(100)
+      return
+    }
+
+    const delays = [420, 760, 330, 1100, 540, 1450, 680]
+    const timer = setTimeout(() => {
+      setProgress((current) => {
+        if (current >= 94) return current
+        const remaining = 94 - current
+        const step = Math.max(0.35, remaining * (0.08 + ((tick + current) % 5) * 0.025))
+        return Math.min(94, current + step)
+      })
+    }, delays[(tick + Math.floor(progress)) % delays.length])
+
+    return () => clearTimeout(timer)
+  }, [progress, ready, tick])
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-4 text-center">
@@ -54,15 +75,21 @@ export function BootScreen({ error, onRetry }: Props) {
       ) : (
         <>
           <p className="mt-3 min-h-5 text-sm font-bold text-pokeblue/80" aria-live="polite">
-            {MESSAGES[tick % MESSAGES.length]}
+            {ready ? 'Ready!' : elapsed >= 8 ? 'Almost done…' : MESSAGES[tick % MESSAGES.length]}
           </p>
-          <div className="boot-track mt-5 w-56" aria-hidden />
-          {elapsed >= 8 && (
-            <p className="mt-4 max-w-xs text-xs font-semibold text-slate-500">
-              Almost done — thanks for your patience!
-              After that it&apos;s fast, promise.
-            </p>
-          )}
+          <div
+            className="boot-track mt-5 w-64"
+            role="progressbar"
+            aria-label="Connecting to server"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(progress)}
+          >
+            <div className="boot-progress" style={{ width: `${progress}%` }} />
+          </div>
+          <p className="mt-2 text-xs font-extrabold tabular-nums text-pokeblue/60">
+            {Math.round(progress)}%
+          </p>
         </>
       )}
     </div>
